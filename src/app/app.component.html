@@ -1,29 +1,62 @@
-<div>
-  <input type="text" [(ngModel)]="sourceNumber" />
-  <select [(ngModel)]="sourceCurrency" (change)="reset()">
-    <option *ngFor="let cur of currencyList | keyvalue" [value]="cur.value">
-      {{ cur.key }}
-    </option>
-  </select>
+<div class="exchange-form">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="sourceAmount">Source Amount</label>
+      <input
+        type="text"
+        class="form-control"
+        id="sourceAmount"
+        [(ngModel)]="sourceNumber"
+        (input)="reset()"
+      />
+    </div>
+    <div class="form-group col-md-4">
+      <label for="sourceCurrency">Source Currency</label>
+      <select
+        id="sourceCurrency"
+        class="form-control"
+        [(ngModel)]="sourceCurrency"
+        (change)="reset()"
+      >
+        <option selected>Choose...</option>
+        <option *ngFor="let cur of currencyList | keyvalue" [value]="cur.value">
+          {{ cur.key }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="targetAmount">Target Amount</label>
+      <input
+        type="text"
+        class="form-control"
+        id="targetAmount"
+        [(ngModel)]="targetNumber"
+        readonly
+        style="background-color: lightgray"
+      />
+    </div>
+    <div class="form-group col-md-4">
+      <label for="targetCurrency">Target Currency</label>
+      <select
+        id="targetCurrency"
+        class="form-control"
+        [(ngModel)]="targetCurrency"
+        (change)="reset()"
+      >
+        <option selected>Choose...</option>
+        <option *ngFor="let cur of currencyList | keyvalue" [value]="cur.value">
+          {{ cur.key }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <button
+    class="btn btn-primary"
+    (click)="calculate()"
+    [disabled]="!sourceCurrency || !targetCurrency || !sourceNumber"
+  >
+    CONVERT
+  </button>
 </div>
-<div>
-  <input
-    type="text"
-    [(ngModel)]="targetNumber"
-    readonly
-    style="background-color: lightgray"
-  />
-  <select [(ngModel)]="targetCurrency" (change)="reset()">
-    <option *ngFor="let cur of currencyList | keyvalue" [value]="cur.value">
-      {{ cur.key }}
-    </option>
-  </select>
-</div>
-
-<button
-  class="btn btn-primary"
-  (click)="calculate()"
-  [disabled]="!sourceCurrency || !targetCurrency || !sourceNumber"
->
-  CONVERT
-</button>
